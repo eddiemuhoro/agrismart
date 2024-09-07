@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "Fruits",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/fruits.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Vegetables",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/vegetables.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Dairy",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/dairy.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Meat",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/meat.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Seafood",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/seafood.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Grains",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/grains.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Beverages",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/beverages.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Snacks",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/snacks.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Canned",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/canned.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Bakery",
+        "image": "https://res.cloudinary.com/djxkexzcr/image/upload/v1608580134/food/bakery.jpg"
+    }
+]
