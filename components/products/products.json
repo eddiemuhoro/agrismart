@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "name": "Milk",
+        "price": 2.5,
+        "image": "milk.jpg",
+        "category": "dairy"
+    },
+    {
+        "id": 2,
+        "name": "Eggs",
+        "price": 1.5,
+        "image": "eggs.jpg",
+        "category": "dairy"
+    },
+    {
+        "id": 3,
+        "name": "Cheese",
+        "price": 3.5,
+        "image": "cheese.jpg",
+        "category": "dairy"
+    },
+    {
+        "id": 4,
+        "name": "Butter",
+        "price": 2.0,
+        "image": "butter.jpg",
+        "category": "dairy"
+    },
+    {
+        "id": 5,
+        "name": "Yogurt",
+        "price": 1.0,
+        "image": "yogurt.jpg",
+        "category": "dairy"
+    },
+    {
+        "id": 6,
+        "name": "Beef",
+        "price": 5.0,
+        "image": "beef.jpg",
+        "category": "meat"
+    },
+    {
+        "id": 7,
+        "name": "Chicken",
+        "price": 3.0,
+        "image": "chicken.jpg",
+        "category": "meat"
+    },
+    {
+        "id": 8,
+        "name": "Pork",
+        "price": 4.0,
+        "image": "pork.jpg",
+        "category": "meat"
+    },
+    {
+        "id": 9,
+        "name": "Lamb",
+        "price": 6.0,
+        "image": "lamb.jpg",
+        "category": "meat"
+    },
+    {
+        "id": 10,
+        "name": "Fish",
+        "price": 4.5,
+        "image": "fish.jpg",
+        "category": "meat"
+    },
+    {
+        "id": 11,
+        "name": "Apple",
+        "price": 1.0,
+        "image": "apple.jpg",
+        "category": "fruit"
+    }
+
+]

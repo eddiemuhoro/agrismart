@@ -4,6 +4,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Categories from "@/components/products/Categories";
+import Products from "@/components/products/Products";
 
 export default function HomeScreen() {
   return (
@@ -33,6 +34,10 @@ export default function HomeScreen() {
 
       <View style={styles.categoriesContainer}>
         <Categories />
+      </View>
+
+      <View>
+        <Products />
       </View>
     </ParallaxScrollView>
   );
