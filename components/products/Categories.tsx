@@ -3,11 +3,17 @@ import React from "react";
 import data from "./data.json";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { Link } from "expo-router";
 
 const Categories = () => {
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="subtitle">Categories</ThemedText>
+      <View style={styles.categoriesTitle}>
+        <ThemedText type="subtitle">Categories</ThemedText>
+        <Link href="/(tabs)/explore">
+          <ThemedText type="link">See all</ThemedText>
+        </Link>
+      </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -37,6 +43,11 @@ const styles = StyleSheet.create({
     paddingTop: 0, // Ensure no top padding
     flexDirection: "column",
     gap: 16,
+  },
+  categoriesTitle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   categoriesList: {
     flexDirection: "row",
