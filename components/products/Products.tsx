@@ -2,12 +2,18 @@ import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
 import { ThemedText } from "../ThemedText";
 import products from "./products.json";
-import { Image } from "@rneui/themed";
+import { Icon, Image } from "@rneui/themed";
+import { Link } from "expo-router";
 
 const Products = () => {
   return (
     <View>
-      <ThemedText type="subtitle">Products</ThemedText>
+      <View style={styles.productsTitle}>
+        <ThemedText type="subtitle">Products</ThemedText>
+        <Link href="/(tabs)/explore">
+          <ThemedText type="link">See all</ThemedText>
+        </Link>
+      </View>
       <FlatList
         data={products} // Pass the products data here
         renderItem={({ item }) => (
@@ -18,8 +24,20 @@ const Products = () => {
               }}
               style={styles.image}
             />
-            <ThemedText type="defaultSemiBold">{item.name}</ThemedText>
-            <ThemedText type="defaultSemiBold">{item.price}</ThemedText>
+            <ThemedText type="subtitle">{item.name}</ThemedText>
+            <View style={styles.priceContainer}>
+              <ThemedText type="defaultSemiBold">Ksh {item.price}</ThemedText>
+              <View style={styles.rateContainer}>
+                <Icon
+                  name="star"
+                  type="font-awesome"
+                  color="#FFD700"
+                  size={20}
+                />
+                <ThemedText type="defaultSemiBold">4.7 </ThemedText>
+                <ThemedText type="link">({21})</ThemedText>
+              </View>
+            </View>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -36,6 +54,11 @@ const styles = StyleSheet.create({
   container: {
     gap: 16, // Add gap between items
   },
+  productsTitle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   product: {
     flexDirection: "column",
     justifyContent: "space-between",
@@ -44,7 +67,16 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 150,
-    borderRadius: 10,
+    height: 200,
+    borderRadius: 30,
+  },
+  priceContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  rateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
