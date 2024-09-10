@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, View, TextInput, FlatList } from "react-native";
-import { Icon } from "@rneui/themed"; // This is for the filter icon; you can use react-native-vector-icons as well
+import { Icon, Image } from "@rneui/themed"; // This is for the filter icon; you can use react-native-vector-icons as well
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Categories from "@/components/products/Categories";
 import Products from "@/components/products/Products";
+import images from "../../components/products/banner_images.json";
 
 export default function HomeScreen() {
   // Render the header component (search and categories)
@@ -51,6 +52,26 @@ export default function HomeScreen() {
           />
         </View>
         <Icon name="filter" type="font-awesome" color="#A1CEDC" />
+      </ThemedView>
+
+      <ThemedView style={styles.bannerContainer}>
+        <Image
+          source={{
+            uri: "https://images.unsplash.com/photo-1715368063081-affe2d866eb0?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          }}
+          style={styles.bannerImage}
+        />
+        <View style={styles.bannerDots}>
+          {images.map((_: any, index: number) => (
+            <Icon
+              key={index}
+              name="circle"
+              type="font-awesome"
+              size={10}
+              color={index === 0 ? "#007E2F" : "#A1CEDC"}
+            />
+          ))}
+        </View>
       </ThemedView>
 
       {/* Categories */}
@@ -146,5 +167,21 @@ const styles = StyleSheet.create({
   categoriesContainer: {
     marginTop: 0,
     paddingTop: 0,
+  },
+  bannerContainer: {
+    marginBottom: 16,
+    paddingHorizontal: 16,
+  },
+  bannerImage: {
+    width: "100%",
+    height: 200,
+    borderRadius: 30,
+  },
+  bannerDots: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 8,
   },
 });
