@@ -1,11 +1,12 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { ThemedText } from "../ThemedText";
 import products from "./products.json";
-import { Icon, Image } from "@rneui/themed";
-import { Link } from "expo-router";
+import { Button, Icon, Image } from "@rneui/themed";
+import { Link, usePathname } from "expo-router";
 
 const Products = () => {
+  const pathname = usePathname();
   return (
     <View>
       <View style={styles.productsTitle}>
@@ -38,6 +39,16 @@ const Products = () => {
                 <ThemedText type="link">({21})</ThemedText>
               </View>
             </View>
+            {pathname === "/explore" && (
+              <TouchableOpacity
+                style={styles.addToCartButton}
+                onPress={() => console.log("Added to cart")}
+              >
+                <ThemedText type="defaultSemiBold" style={styles.buttonText}>
+                  Add to Cart
+                </ThemedText>
+              </TouchableOpacity>
+            )}
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -78,5 +89,14 @@ const styles = StyleSheet.create({
   rateContainer: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  addToCartButton: {
+    backgroundColor: "#007E2F",
+    padding: 8,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "#ffffff",
+    textAlign: "center",
   },
 });
