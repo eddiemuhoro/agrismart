@@ -23,7 +23,7 @@ const Products = () => {
               <Icon
                 name="heart"
                 type="font-awesome"
-                color="#FF0000"
+                color={`${item.isFavorite ? "#FF0000" : "#000000"}`}
                 size={20}
               />
             </View>
