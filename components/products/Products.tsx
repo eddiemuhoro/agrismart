@@ -19,6 +19,14 @@ const Products = () => {
         data={products} // Pass the products data here
         renderItem={({ item }) => (
           <View style={styles.product}>
+            <View style={styles.favoriteIcon}>
+              <Icon
+                name="heart"
+                type="font-awesome"
+                color="#FF0000"
+                size={20}
+              />
+            </View>
             <Image
               source={{
                 uri: "https://images.unsplash.com/photo-1591271300850-22d6784e0a7f?q=80&w=1674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -75,6 +83,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "50%",
     padding: 8,
+    position: "relative",
+  },
+  favoriteIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    padding: 5,
+    borderRadius: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
   },
   image: {
     width: "100%",
