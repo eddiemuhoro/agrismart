@@ -3,10 +3,11 @@ import React from "react";
 import { ThemedText } from "../ThemedText";
 import products from "./products.json";
 import { Button, Icon, Image } from "@rneui/themed";
-import { Link, usePathname } from "expo-router";
+import { Link, usePathname, useRouter } from "expo-router";
 
 const Products = () => {
   const pathname = usePathname();
+  const router = useRouter();
   return (
     <View>
       <View style={styles.productsTitle}>
@@ -50,7 +51,7 @@ const Products = () => {
             {pathname === "/explore" && (
               <TouchableOpacity
                 style={styles.addToCartButton}
-                onPress={() => console.log("Added to cart")}
+                onPress={() => router.push(`/productDetails?id=${item.id}`)}
               >
                 <ThemedText type="defaultSemiBold" style={styles.buttonText}>
                   Add to Cart
