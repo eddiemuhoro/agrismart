@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-import data from "./data.json";
+import data from "./data/data.json";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { Link } from "expo-router";

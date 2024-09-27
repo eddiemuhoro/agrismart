@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "address": "123 Main St",
+        "city": "Springfield",
+        "state": "IL",
+        "zip": "62701",
+        "phone": "+254 700 000 000"
+    },
+    {
+        "id": 2,
+        "name": "Jane Doe",
+        "address": "456 Elm St",
+        "city": "Springfield",
+        "state": "IL",
+        "zip": "62702",
+        "phone": "+254 700 000 001"
+    },
+    {
+        "id": 3,
+        "name": "Jim Doe",
+        "address": "789 Oak St",
+        "city": "Springfield",
+        "state": "IL",
+        "zip": "62703",
+        "phone": "+254 700 000 002"
+    }
+]
+

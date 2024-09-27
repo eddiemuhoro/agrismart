@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { ThemedText } from "../ThemedText";
-import products from "./products.json";
+import products from "./data/products.json";
 import { Button, Icon, Image } from "@rneui/themed";
 import { Link, usePathname, useRouter } from "expo-router";
 

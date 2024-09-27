@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Categories from "@/components/products/Categories";
 import Products from "@/components/products/Products";
-import images from "../../components/products/banner_images.json";
+import images from "../../components/products/data/banner_images.json";
 
 export default function HomeScreen() {
   // Render the header component (search and categories)
