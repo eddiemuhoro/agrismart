@@ -62,7 +62,7 @@ export default function ProductDetail() {
       </View> */}
       <View style={styles.container}>
         {cart_items.map((item) => (
-          <View style={styles.header}>
+          <View key={item.id} style={styles.header}>
             <View style={styles.headerTop}>
               <View style={styles.titleSection}>
                 <Image source={{ uri: item.image }} style={styles.image} />
