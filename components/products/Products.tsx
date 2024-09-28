@@ -51,7 +51,7 @@ const Products = () => {
             {pathname === "/explore" && (
               <TouchableOpacity
                 style={styles.addToCartButton}
-                onPress={() => router.push(`/productDetails?id=${item.id}`)}
+                onPress={() => router.push(`/Details?id=${item.id}`)}
               >
                 <ThemedText type="defaultSemiBold" style={styles.buttonText}>
                   Add to Cart
