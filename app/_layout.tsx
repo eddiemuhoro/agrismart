@@ -33,7 +33,13 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Login",
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="(tabs)"
           options={{
