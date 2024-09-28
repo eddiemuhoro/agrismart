@@ -1,28 +1,39 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Auth from "@/components/authentication/Auth";
-import { Session } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
 import { ThemedView } from "@/components/ThemedView";
 import { Redirect } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const index = () => {
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
+    const getSession = async () => {
+      const token = await AsyncStorage.getItem("token");
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+      if (token) {
+        setSession(token);
+
+        // const decodedToken = JSON.parse(token);
+        // const currentTime = Date.now() / 1000;
+        // if (decodedToken.exp < currentTime) {
+        //   await AsyncStorage.removeItem("token");
+        // } else {
+        //   setSession(token);
+        // }
+      }
+    };
+
+    getSession();
   }, []);
 
   return (
-    <ThemedView>
-      {session && session.user ? <Redirect href="/(tabs)/" /> : <Auth />}
-    </ThemedView>
+    <>
+      <ThemedView>
+        {session ? <Redirect href="/(tabs)/" /> : <Auth />}
+      </ThemedView>
+    </>
   );
 };
 

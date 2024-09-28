@@ -1,91 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, AppState } from "react-native";
-import { supabase } from "@/lib/supabase";
-import { Button, Input } from "@rneui/themed";
+import { Button, Input, Text } from "@rneui/themed";
 import { ThemedView } from "../ThemedView";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Correct import for AsyncStorage
+import { Redirect, useNavigation, useRouter } from "expo-router";
+import { ThemedText } from "../ThemedText";
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
-AppState.addEventListener("change", (state) => {
-  if (state === "active") {
-    supabase?.auth.startAutoRefresh();
-  } else {
-    supabase?.auth.stopAutoRefresh();
-  }
-});
+const url = "https://shpp-backend.onrender.com/login";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  async function signInWithEmail() {
+  const signIn = async () => {
     setLoading(true);
-    const { error } = await supabase?.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }
-
-  async function signUpWithEmail() {
-    setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
-    setLoading(false);
-  }
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        await AsyncStorage.setItem("token", data.token);
+        router.push("/(tabs)/");
+        Alert.alert("Success", "You have been signed in");
+      } else {
+        Alert.alert("Error", "Invalid email or password");
+      }
+    } catch (error) {
+      Alert.alert("Error", "An error occurred");
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={[styles.verticallySpaced, styles.mt20]}>
-        <Input
-          label="Email"
-          leftIcon={{ type: "font-awesome", name: "envelope" }}
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize={"none"}
-        />
+    <>
+      <ThemedView style={styles.container}>
+        <ThemedView style={[styles.verticallySpaced, styles.mt20]}>
+          <Input
+            label="Email"
+            leftIcon={{ type: "font-awesome", name: "envelope" }}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="email@address.com"
+            autoCapitalize={"none"}
+          />
+        </ThemedView>
+        <ThemedView style={styles.verticallySpaced}>
+          <Input
+            label="Password"
+            leftIcon={{ type: "font-awesome", name: "lock" }}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+            placeholder="Password"
+            autoCapitalize={"none"}
+          />
+        </ThemedView>
+        <ThemedView style={[styles.verticallySpaced, styles.mt20]}>
+          <Button title="Sign in" disabled={loading} onPress={signIn} />
+        </ThemedView>
+        <ThemedText>
+          {loading ? "Loading..." : "Don't have an account?"}
+        </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.verticallySpaced}>
-        <Input
-          label="Password"
-          leftIcon={{ type: "font-awesome", name: "lock" }}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize={"none"}
-        />
-      </ThemedView>
-      <ThemedView style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
-      </ThemedView>
-      <ThemedView style={styles.verticallySpaced}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
-      </ThemedView>
-    </ThemedView>
+    </>
   );
 }
 
