@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import ProductDetail from "@/components/products/details";
+import ProductDetail from "@/components/products/cart";
 
 const ProductDetails = () => {
   return <ProductDetail />;
