@@ -11,7 +11,7 @@ import Topbar from "@/components/topbar";
 export default function HomeScreen() {
   // Render the header component (search and categories)
   const renderHeader = () => (
-    <ThemedView>
+    <ThemedView style={{ paddingHorizontal: 16 }}>
       {/* Static Header */}
       {/* Search Bar and Categories */}
       <ThemedView style={styles.searchContainer}>
@@ -77,7 +77,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 32,
+    paddingTop: 32,
   },
 
   searchContainer: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
-    padding: 16,
+    paddingVertical: 16,
   },
   textInputWrapper: {
     flexDirection: "row",
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
   },
   bannerContainer: {
     marginBottom: 16,
-    paddingHorizontal: 16,
   },
   bannerImage: {
     width: "100%",

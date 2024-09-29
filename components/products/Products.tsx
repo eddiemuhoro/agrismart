@@ -68,7 +68,7 @@ const Products = () => {
           <ThemedText type="subtitle">Loading....</ThemedText>
         </View>
       ) : (
-        <View>
+        <View style={styles.productsContainer}>
           <View style={styles.productsTitle}>
             <ThemedText type="subtitle">Products</ThemedText>
             <Link href="/(tabs)/explore">
@@ -143,6 +143,12 @@ export default Products;
 const styles = StyleSheet.create({
   container: {
     gap: 16, // Add gap between items
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  productsContainer: {
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
   },
   productsTitle: {
     flexDirection: "row",
