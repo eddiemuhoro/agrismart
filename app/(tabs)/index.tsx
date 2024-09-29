@@ -6,36 +6,13 @@ import { ThemedView } from "@/components/ThemedView";
 import Categories from "@/components/products/Categories";
 import Products from "@/components/products/Products";
 import images from "../../components/products/data/banner_images.json";
+import Topbar from "@/components/topbar";
 
 export default function HomeScreen() {
   // Render the header component (search and categories)
   const renderHeader = () => (
-    <ThemedView style={styles.container}>
+    <ThemedView>
       {/* Static Header */}
-      <ThemedView style={styles.header}>
-        <ThemedText type="title" style={styles.title}>
-          Farmer
-        </ThemedText>
-        <View style={styles.iconsContainer}>
-          <Icon
-            style={styles.iconBar}
-            name="shopping-cart"
-            type="font-awesome"
-            color="#007E2F"
-          />
-          <View style={styles.bellIconWrapper}>
-            <Icon
-              style={styles.iconBar}
-              name="bell-o"
-              type="font-awesome"
-              color="#007E2F"
-            />
-            {/* Green dot for notifications */}
-            <View style={styles.notificationDot} />
-          </View>
-        </View>
-      </ThemedView>
-
       {/* Search Bar and Categories */}
       <ThemedView style={styles.searchContainer}>
         <View style={styles.textInputWrapper}>
@@ -82,63 +59,27 @@ export default function HomeScreen() {
   );
 
   return (
-    <FlatList
-      style={styles.flatList}
-      data={[]} // Empty data as the footer (Products) will handle product rendering
-      renderItem={null}
-      ListHeaderComponent={renderHeader}
-      ListFooterComponent={<Products />} // Render Products at the bottom
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <View style={styles.container}>
+      {/* Static Header */}
+      <Topbar />
+
+      <FlatList
+        data={[]} // Empty data as the footer (Products) will handle product rendering
+        renderItem={null}
+        ListHeaderComponent={renderHeader}
+        ListFooterComponent={<Products />} // Render Products at the bottom
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  flatList: {
-    flex: 1,
-    paddingHorizontal: 8,
-    backgroundColor: "#FFFFFF",
-  },
   container: {
     flex: 1,
     paddingVertical: 32,
   },
-  header: {
-    height: 70, // Fixed height for the static header
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    paddingVertical: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#DFF1E6",
-  },
-  title: {
-    color: "#007E2F",
-  },
-  iconBar: {
-    padding: 10,
-    borderRadius: 50,
-    backgroundColor: "#DFF1E6",
-  },
 
-  iconsContainer: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  bellIconWrapper: {
-    position: "relative", // Allows absolute positioning of the dot
-  },
-  notificationDot: {
-    position: "absolute",
-    top: 10, // Adjust the position as needed
-    right: 14, // Adjust the position as needed
-    width: 6, // Size of the dot
-    height: 6, // Size of the dot
-    borderRadius: 4, // Makes the dot circular
-    backgroundColor: "green", // Color of the notification dot
-  },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",

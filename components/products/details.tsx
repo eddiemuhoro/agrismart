@@ -8,6 +8,7 @@ import { Icon } from "@rneui/themed";
 import { Picker } from "@react-native-picker/picker";
 import addresses from "./data/addresses.json";
 import cart_items from "./data/cart.json";
+import { useProduct } from "@/hooks/data/products/products";
 
 export default function ProductDetail() {
   const [selectedValue, setSelectedValue] = React.useState(null);
@@ -16,9 +17,10 @@ export default function ProductDetail() {
   const selectedAddress = addresses.find(
     (address) => address.id === selectedValue
   );
+  const { product } = useProduct(id);
 
   // Find the product by ID
-  const product = products.find((item) => item.id === parseInt(id as string));
+  // const product = products.find((item) => item.id === parseInt(id as string));
 
   if (!product) {
     return (

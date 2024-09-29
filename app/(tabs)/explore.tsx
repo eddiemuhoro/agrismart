@@ -5,38 +5,14 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Categories from "@/components/products/Categories";
 import Products from "@/components/products/Products";
-import images from "../../components/products/banner_images.json";
+import images from "../../components/products/data/banner_images.json";
+import Topbar from "@/components/topbar";
+import { commonStyles } from "@/constants/styles";
 
 export default function HomeScreen() {
   // Render the header component (search and categories)
   const renderHeader = () => (
-    <ThemedView style={styles.container}>
-      {/* Static Header */}
-      <ThemedView style={styles.header}>
-        <ThemedText type="title" style={styles.title}>
-          Farmer
-        </ThemedText>
-        <View style={styles.iconsContainer}>
-          <Icon
-            style={styles.iconBar}
-            name="shopping-cart"
-            type="font-awesome"
-            color="#007E2F"
-          />
-          <View style={styles.bellIconWrapper}>
-            <Icon
-              style={styles.iconBar}
-              name="bell-o"
-              type="font-awesome"
-              color="#007E2F"
-            />
-            {/* Green dot for notifications */}
-            <View style={styles.notificationDot} />
-          </View>
-        </View>
-      </ThemedView>
-
-      {/* Search Bar and Categories */}
+    <ThemedView>
       <ThemedView style={styles.searchContainer}>
         <View style={styles.textInputWrapper}>
           <Icon
@@ -67,14 +43,17 @@ export default function HomeScreen() {
   );
 
   return (
-    <FlatList
-      style={styles.flatList}
-      data={[]} // Empty data as the footer (Products) will handle product rendering
-      renderItem={null}
-      ListHeaderComponent={renderHeader}
-      ListFooterComponent={<Products />} // Render Products at the bottom
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <View style={commonStyles.container}>
+      <Topbar />
+      <FlatList
+        style={styles.flatList}
+        data={[]} // Empty data as the footer (Products) will handle product rendering
+        renderItem={null}
+        ListHeaderComponent={renderHeader}
+        ListFooterComponent={<Products />} // Render Products at the bottom
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
   );
 }
 

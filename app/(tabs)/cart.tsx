@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { commonStyles } from "@/constants/styles";
 
 const cart = () => {
   return (
-    <View>
+    <View style={commonStyles.container}>
       <Text>cart</Text>
     </View>
   );
