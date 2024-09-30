@@ -2,19 +2,19 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Auth from "@/components/authentication/Auth";
 import { ThemedView } from "@/components/ThemedView";
-import { Redirect } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
 import Toast from "react-native-toast-message";
 
 const index = () => {
   const [session, setSession] = useState<string | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const getSession = async () => {
       const token = await AsyncStorage.getItem("token");
 
-      if (token) {
+      if (token !== null) {
         setSession(token);
 
         const decodedToken = jwtDecode(token);
@@ -28,12 +28,13 @@ const index = () => {
         ) {
           await AsyncStorage.removeItem("token");
           setSession(null);
+          router.push("/login");
         }
       }
     };
 
     getSession();
-  }, [session]);
+  }, []);
 
   console.log("🚀 ~ file: index.tsx ~ line 38 ~ index ~ session", session);
 

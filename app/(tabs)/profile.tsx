@@ -11,7 +11,7 @@ const profile = () => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem("token");
     // Redirect to login screen
-    router.navigate("/");
+    router.push("/login");
   };
 
   return (

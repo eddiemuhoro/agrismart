@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, TextInput, FlatList } from "react-native";
 import { Icon, Image } from "@rneui/themed"; // This is for the filter icon; you can use react-native-vector-icons as well
 import { ThemedText } from "@/components/ThemedText";
@@ -7,8 +7,33 @@ import Categories from "@/components/products/Categories";
 import Products from "@/components/products/Products";
 import images from "../../components/products/data/banner_images.json";
 import Topbar from "@/components/topbar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
+import { useNavigation, useRouter } from "expo-router";
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const navigation = useNavigation();
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token = await AsyncStorage.getItem("token");
+      if (token !== null) {
+        const decodedToken = jwtDecode(token);
+        const currentTime = new Date().getTime() / 1000;
+        if (
+          decodedToken &&
+          decodedToken.exp &&
+          decodedToken.exp < currentTime
+        ) {
+          await AsyncStorage.removeItem("token");
+        }
+      } else {
+        router.push("/login");
+        console.log("No token found");
+      }
+    };
+    verifyToken();
+  }, []);
   // Render the header component (search and categories)
   const renderHeader = () => (
     <ThemedView style={{ paddingHorizontal: 16 }}>
