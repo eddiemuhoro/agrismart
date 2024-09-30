@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    gap: 10,
+    marginVertical: 10,
   },
   header: {
     flexDirection: "column",
