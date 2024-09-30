@@ -1,8 +1,9 @@
+import { baseUrl } from "@/constants/baseUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import useSWR from "swr";
 
-const url = "https://shpp-backend.onrender.com/product";
+const url = `${baseUrl}/product`;
 const token = AsyncStorage.getItem("token");
 
 export const useProducts = () => {
