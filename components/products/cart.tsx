@@ -6,41 +6,56 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router"; // Hook to get route params
 
-import products from "./data/products.json"; // Assuming you have a products list
 import { ThemedText } from "../ThemedText";
 import { Icon } from "@rneui/themed";
 import { Picker } from "@react-native-picker/picker";
 import addresses from "./data/addresses.json";
-import cart_items from "./data/cart.json";
 import { useProduct } from "@/hooks/data/products/products";
 import Topbar from "../topbar";
 import CartItem from "./cart_item";
+import { useCartItems } from "@/hooks/data/products/cart";
 
 export default function Cart() {
   const [selectedValue, setSelectedValue] = React.useState(null);
   const { id } = useLocalSearchParams(); // Get the product ID from the URL
+  const { cart_items, isLoading } = useCartItems();
 
   const selectedAddress = addresses.find(
     (address) => address.id === selectedValue
   );
   const { product } = useProduct(id);
 
-  // Find the product by ID
-  // const product = products.find((item) => item.id === parseInt(id as string));
-
-  if (!product) {
+  // Check if the product is loading
+  if (isLoading) {
     return (
-      <View style={styles.container}>
-        <Text>Product not found</Text>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007E2F" />
+        <Text>Loading Cart Items...</Text>
       </View>
     );
   }
 
+  // If no cart items are found after loading
+  if (!cart_items || cart_items.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text>No items in the cart</Text>
+      </View>
+    );
+  }
+
+  const totalPrice = cart_items?.reduce(
+    (total: number, item: any) => total + item.price * item.quantity,
+    0
+  );
+  console.log("totalPrice", totalPrice);
+
   const CouponSection = () => (
-    <View style={styles.couponContainer}>
+    <View style={[styles.sectionContainer, styles.couponContainer]}>
       <TouchableOpacity>
         <ThemedText type="subtitle" style={styles.couponText}>
           Apply Coupon
@@ -50,37 +65,37 @@ export default function Cart() {
   );
 
   const InvoiceSection = () => (
-    <View>
+    <View style={styles.sectionContainer}>
       <ThemedText type="subtitle">Invoice</ThemedText>
 
       <View style={styles.priceContainer}>
         <View style={styles.priceItem}>
           <ThemedText type="defaultSemiBold">Original Price</ThemedText>
-          <ThemedText type="defaultSemiBold">Ksh {product.price}</ThemedText>
+          <ThemedText type="defaultSemiBold">Ksh {totalPrice}</ThemedText>
         </View>
         <View style={styles.priceItem}>
-          <ThemedText type="defaultSemiBold">Delivery</ThemedText>
+          <ThemedText type="defaultSemiBold">Delivery Price</ThemedText>
           <ThemedText type="defaultSemiBold" style={{ color: "red" }}>
-            Ksh {product.price}
+            Ksh 243
           </ThemedText>
         </View>
         <View style={styles.priceItem}>
           <ThemedText type="defaultSemiBold">GST</ThemedText>
           <ThemedText type="defaultSemiBold" style={{ color: "red" }}>
-            Ksh {product.price}
+            Ksh 434
           </ThemedText>
         </View>
         <View style={styles.priceItem}>
           <ThemedText type="defaultSemiBold">Discount</ThemedText>
-          <ThemedText type="defaultSemiBold">Ksh {product.price}</ThemedText>
+          <ThemedText type="defaultSemiBold">Ksh 324</ThemedText>
         </View>
 
         <View style={styles.priceItem}>
           <ThemedText type="subtitle" style={{ color: "#007E2F" }}>
-            Discount
+            Total Price
           </ThemedText>
           <ThemedText type="subtitle" style={{ color: "#007E2F" }}>
-            Ksh {product.price}
+            Ksh {totalPrice + 243 + 434 - 324}
           </ThemedText>
         </View>
       </View>
@@ -88,7 +103,7 @@ export default function Cart() {
   );
 
   const AddressSection = () => (
-    <View>
+    <View style={styles.sectionContainer}>
       <ThemedText type="subtitle">Shipping Details</ThemedText>
       <View style={styles.priceContainer}>
         <View style={styles.priceItem}>
@@ -96,23 +111,21 @@ export default function Cart() {
             {selectedAddress?.name || "Select Address"}
           </ThemedText>
           <View style={styles.pickerWrapper}>
-            {
-              <Picker
-                selectedValue={selectedValue}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedValue(itemValue)
-                }
-              >
-                {addresses.map((address) => (
-                  <Picker.Item
-                    key={address.id}
-                    label={address.name}
-                    value={address.id}
-                  />
-                ))}
-              </Picker>
-            }
+            <Picker
+              selectedValue={selectedValue}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedValue(itemValue)
+              }
+            >
+              {addresses.map((address) => (
+                <Picker.Item
+                  key={address.id}
+                  label={address.name}
+                  value={address.id}
+                />
+              ))}
+            </Picker>
           </View>
         </View>
         <View>
@@ -128,17 +141,23 @@ export default function Cart() {
           </ThemedText>
         </View>
       </View>
-      <View style={styles.priceContainer}>
-        <TouchableOpacity>
-          <ThemedText type="link">Add pin location on map</ThemedText>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.paymentButton}>
-        <ThemedText style={styles.paymentButtonText} type="subtitle">
-          Proceed to Payment
-        </ThemedText>
+    </View>
+  );
+
+  const MapSection = () => (
+    <View style={[styles.priceContainer, styles.sectionContainer]}>
+      <TouchableOpacity>
+        <ThemedText type="link">Add pin location on map</ThemedText>
       </TouchableOpacity>
     </View>
+  );
+
+  const PaymentButton = () => (
+    <TouchableOpacity style={styles.paymentButton}>
+      <ThemedText style={styles.paymentButtonText} type="subtitle">
+        Proceed to Payment
+      </ThemedText>
+    </TouchableOpacity>
   );
 
   return (
@@ -146,7 +165,7 @@ export default function Cart() {
       <Topbar />
       <View style={styles.container}>
         <FlatList
-          data={cart_items} // Empty data as the footer (Products) will handle product rendering
+          data={cart_items} // Cart items data
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <CartItem item={item} />}
           ListFooterComponent={
@@ -154,6 +173,8 @@ export default function Cart() {
               <CouponSection />
               <InvoiceSection />
               <AddressSection />
+              <MapSection />
+              <PaymentButton />
             </>
           }
           initialNumToRender={1}
@@ -168,60 +189,14 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#ffffff",
     flex: 1,
-    flexDirection: "column",
-    gap: 10,
   },
-  header: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#DFF1E6",
-    padding: 10,
+  sectionContainer: {
+    marginBottom: 16, // Adds space between sections
   },
-  headerTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-  },
-  headerBottom: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  titleSection: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    borderColor: "black",
-    borderWidth: 1,
-  },
-  title: {
-    fontWeight: "bold",
-    marginVertical: 10,
-  },
-  price: {
-    fontSize: 18,
-    color: "green",
-  },
-  quantity: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 10,
-    gap: 10,
-    backgroundColor: "green",
-    padding: 10,
-    borderRadius: 20,
-  },
-  description: {
-    marginTop: 10,
-    fontSize: 16,
   },
   couponContainer: {
     borderRadius: 10,
